@@ -129,7 +129,7 @@ try:
                 bbox = bboxs[largestInd]
                 ok = tracker.init(color_image, bbox)
             # Display the mask
-            cv2.imshow('mask', frame_erode)
+            #cv2.imshow('mask', frame_erode)
             #cv2.imshow('HSV', hsv_image)
 
         # Do the Tracking
