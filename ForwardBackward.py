@@ -87,7 +87,7 @@ depth_sensor = profile.get_device().first_depth_sensor()
 depth_scale = depth_sensor.get_depth_scale()
 align_to = rs.stream.color
 align = rs.align(align_to)
-tracker = cv2.TrackerKCF_create()
+tracker = cv2.TrackerMIL_create()
 try:
     while True:
 
