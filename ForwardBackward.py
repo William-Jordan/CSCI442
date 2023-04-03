@@ -125,9 +125,9 @@ try:
                     if bboxs[i][2]*bboxs[i][3] > largest:
                         largest = bboxs[i][2]*bboxs[i][3]
                         largestInd = i
-            bbox = bboxs[largestInd]
-            tracker = cv2.TrackerKCF_create()
-            ok = tracker.init(color_image, bbox)
+                bbox = bboxs[largestInd]
+                tracker = cv2.TrackerKCF_create()
+                ok = tracker.init(color_image, bbox)
             # Display the mask
             cv2.imshow('mask', frame_erode)
             #cv2.imshow('HSV', hsv_image)
