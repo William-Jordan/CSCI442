@@ -17,7 +17,6 @@ import pyrealsense2 as rs
 import numpy as np
 import cv2
 import time
-import tkinter as tk
 from maestro import Controller
 
 
@@ -27,7 +26,6 @@ BODY = 0
 HEADTILT = 4
 HEADTURN = 3
 
-root = tk.Tk()
 tango = Controller()
 body = 6000
 headTurn = 6000
