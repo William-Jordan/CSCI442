@@ -67,7 +67,7 @@ else:
 profile = pipeline.start(config)
 
 scale = 10000  # determines how much to scale depth camera by
-time.sleep(1)  # delay to let camera warm up
+
 depthMax = 300  # maximum value for depth pixel
 depthMin = 0  # minimum value for depth pixel
 
@@ -81,7 +81,8 @@ frames = align.process(frames)
 color_frame = frames.get_color_frame()
 color_image = np.asanyarray(color_frame.get_data())
 tracker = cv2.TrackerMIL_create()
-bbox = cv2.selectROI(frame, False)
+time.sleep(1)  # delay to let camera warm up
+bbox = cv2.selectROI(color_image, False)
 ok = tracker.init(color_image, bbox)
 try:
     while True:
