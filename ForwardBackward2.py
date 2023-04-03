@@ -125,7 +125,7 @@ try:
             for k in range(-1, 2, 1):
                 depthSum += depth_image[center[0] + j][center[1] + k] * depth_scale  # Collects depth in meters
         depthMeter = depthSum/9
-        if depthMeter > 1.5:
+        if depthMeter > 1.6:
             print('Forward')
             tango.setTarget(MOTORS, forward)
         elif depthMeter < 1:
