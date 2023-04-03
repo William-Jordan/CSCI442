@@ -87,6 +87,7 @@ depth_sensor = profile.get_device().first_depth_sensor()
 depth_scale = depth_sensor.get_depth_scale()
 align_to = rs.stream.color
 align = rs.align(align_to)
+tracker = cv2.TrackerKCF_create()
 try:
     while True:
 
@@ -126,7 +127,6 @@ try:
                         largest = bboxs[i][2]*bboxs[i][3]
                         largestInd = i
                 bbox = bboxs[largestInd]
-                tracker = cv2.TrackerKCF_create()
                 ok = tracker.init(color_image, bbox)
             # Display the mask
             cv2.imshow('mask', frame_erode)
