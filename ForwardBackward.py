@@ -29,7 +29,7 @@ HEADTURN = 3
 tango = Controller()
 body = 6000
 headTurn = 6000
-headTilt 6000
+headTilt = 6000
 motors = 6000
 turn = 6000
 
