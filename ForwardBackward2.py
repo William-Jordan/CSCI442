@@ -125,10 +125,10 @@ try:
             for k in range(-1, 2, 1):
                 depthSum += depth_image[center[0] + j][center[1] + k] * depth_scale  # Collects depth in meters
         depthMeter = depthSum/9
-        if depthMeter > 1.1:
+        if depthMeter > 1.5:
             print('Forward')
             tango.setTarget(MOTORS, forward)
-        elif depthMeter < .9:
+        elif depthMeter < 1:
             tango.setTarget(MOTORS, backward)
             print('Backward')
         else:
@@ -138,10 +138,11 @@ try:
         # Show images
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
         cv2.resizeWindow('RealSense', 300,300)
-        cv2.imshow('RealSense', images)
+        cv2.imshow('RealSense', color_image)
 
         key = cv2.waitKey(1)
         if key == 27:
+            tango.setTarget(MOTORS, stop)
             break
 finally:
     # Stop streaming
