@@ -61,6 +61,7 @@ while True:
         print('straight')
     #cv.imshow('mask', img)
     #print(frame.shape)
+    frame = cv.resize(frame, (240, 360))
     cv.imshow('video', frame)
     cv.imshow('thresh', thresh)
 
