@@ -26,8 +26,8 @@ cv.setTrackbarPos('thresh2', 'thresholds', 210)
 video = cv.VideoCapture(2)
 kernel = np.ones((5,5),np.uint8)
 
-lowerBound = 220
-upperBound = 420
+lowerBound = 150
+upperBound = 250
 #time.sleep(5)
 while True:
     check, frame = video.read()
@@ -38,7 +38,8 @@ while True:
     mask2 = cv.inRange(frame, (0,0,thresh2), (255,255,255))
     img = mask + mask2
     ret,thresh = cv.threshold(img, 50, 255, cv.THRESH_BINARY)
-    
+    frame = cv.resize(frame, (400, 400))
+    thresh = cv.resize(thresh, (400,400))
     
     massX, massY = np.where(thresh >=255)
     if len(massX) == 0 or len(massY) == 0:
@@ -49,8 +50,8 @@ while True:
     #print(cogY)
     #print()
     frame = cv.circle(frame, (int(cogY), int(cogX)), 10, (255,255,0), 2)
-    frame = cv.line(frame, (lowerBound,0), (lowerBound,480), (255,0,0),2)
-    frame = cv.line(frame, (upperBound,0), (upperBound,480), (255,0,0),2)
+    frame = cv.line(frame, (lowerBound,0), (lowerBound,400), (255,0,0),2)
+    frame = cv.line(frame, (upperBound,0), (upperBound,400), (255,0,0),2)
     if cogY < lowerBound:
         print('turn left')
     elif cogY > upperBound:
@@ -61,7 +62,7 @@ while True:
         print('straight')
     #cv.imshow('mask', img)
     #print(frame.shape)
-    frame = cv.resize(frame, (240, 360))
+
     cv.imshow('video', frame)
     cv.imshow('thresh', thresh)
 
