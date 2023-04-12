@@ -7,8 +7,8 @@ thresh1= 0
 thresh2= 0
 
 MOTORS = 1
-TURN = 2
-BODY = 0
+TURN = 0
+BODY = 2
 HEADTILT = 4
 HEADTURN = 3
 
