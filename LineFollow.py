@@ -1,9 +1,29 @@
 import cv2 as cv
 import numpy as np
 import time
+from maestro import Controller
 
 thresh1= 0
 thresh2= 0
+
+MOTORS = 1
+TURN = 2
+BODY = 0
+HEADTILT = 4
+HEADTURN = 3
+
+tango = Controller()
+body = 6000
+headTurn = 6000
+headTilt = 6000
+motors = 6000
+turn = 6000
+
+forward = 5400
+backward = 6800
+left = 5500
+right = 6500
+stop = 6000
 
 def onMouse(event, x, y, flags, param):
     if event == cv.EVENT_LBUTTONDBLCLK:
@@ -33,9 +53,9 @@ while True:
     check, frame = video.read()
     #frame_hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
     #gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-    
-    mask = cv.inRange(frame, (thresh1,0,0), (255,255,255))
-    mask2 = cv.inRange(frame, (0,0,thresh2), (255,255,255))
+    blur = cv.blur(frame, (5,5))
+    mask = cv.inRange(blur, (thresh1,0,0), (255,255,255))
+    mask2 = cv.inRange(blur, (0,0,thresh2), (255,255,255))
     img = mask + mask2
     ret,thresh = cv.threshold(img, 50, 255, cv.THRESH_BINARY)
     frame = cv.resize(frame, (400, 400))
@@ -54,12 +74,20 @@ while True:
     frame = cv.line(frame, (upperBound,0), (upperBound,400), (255,0,0),2)
     if cogY < lowerBound:
         print('turn left')
+        tango.setTarget(MOTORS, stop)
+        tango.setTarget(TURN, left)
     elif cogY > upperBound:
         print('turn right')
+        tango.setTarget(MOTORS, stop)
+        tango.setTarget(TURN, right)
     elif len(massX) < 9000 and len(massY) < 9000:
         print('stop')
+        tango.setTarget(TURN, stop)
+        tango.setTarget(MOTORS, stop)
     else:
         print('straight')
+        tango.setTarget(TURN, stop)
+        tango.setTarget(MOTORS, forward)
     #cv.imshow('mask', img)
     #print(frame.shape)
 
