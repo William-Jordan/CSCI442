@@ -19,10 +19,10 @@ headTilt = 6000
 motors = 6000
 turn = 6000
 
-forward = 5400
+forward = 5500
 backward = 6800
-left = 5200
-right = 6800
+left = 5400
+right = 6600
 stop = 6000
 
 stopThresh = 7000
@@ -116,5 +116,7 @@ while True:
     key = cv.waitKey(1)
     if key == 27:
         break
+tango.setTarget(TURN, stop)
+tango.setTarget(MOTORS, stop)
 video.release()
 cv.destroyAllWindows()
