@@ -94,9 +94,11 @@ while True:
         if headBang:
             tango.setTarget(HEADTILT, headUp)
             tango.setTarget(HEADTURN, headUp)
+            tango.setTarget(BODY, headUp)
         else:
-            tango.setTarget(HEADTILD, headDown)
+            tango.setTarget(HEADTILTg, headDown)
             tango.setTarget(HEADTURN, headDown)
+            tango.setTarget(BODY, headDown)
         headBang = !headBang
         
     else:
@@ -133,5 +135,6 @@ tango.setTarget(TURN, stop)
 tango.setTarget(MOTORS, stop)
 tango.setTarget(HEADTURN, stop)
 tango.setTarget(HEADTILT, stop)
+tango.setTarget(BODY, stop)
 video.release()
 cv.destroyAllWindows()
