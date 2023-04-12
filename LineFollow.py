@@ -19,13 +19,18 @@ headTilt = 6000
 motors = 6000
 turn = 6000
 
-forward = 5500
+forward = 5300
 backward = 6800
-left = 5400
-right = 6600
+left = 6900
+right = 5100
 stop = 6000
 
-stopThresh = 7000
+stopThresh = 4000
+
+headBang = True
+headUp = 6600
+headDown = 5400
+
 
 def onMouse(event, x, y, flags, param):
     if event == cv.EVENT_LBUTTONDBLCLK:
@@ -48,8 +53,8 @@ cv.setTrackbarPos('thresh2', 'thresholds', 210)
 video = cv.VideoCapture(2)
 kernel = np.ones((5,5),np.uint8)
 
-lowerBound = 150
-upperBound = 250
+lowerBound = 125
+upperBound = 275
 #time.sleep(5)
 while True:
     check, frame = video.read()
@@ -86,6 +91,14 @@ while True:
         print('stop')
         tango.setTarget(TURN, stop)
         tango.setTarget(MOTORS, stop)
+        if headBang:
+            tango.setTarget(HEADTILT, headUp)
+            tango.setTarget(HEADTURN, headUp)
+        else:
+            tango.setTarget(HEADTILD, headDown)
+            tango.setTarget(HEADTURN, headDown)
+        headBang = !headBang
+        
     else:
         print('straight')
         tango.setTarget(TURN, stop)
@@ -118,5 +131,7 @@ while True:
         break
 tango.setTarget(TURN, stop)
 tango.setTarget(MOTORS, stop)
+tango.setTarget(HEADTURN, stop)
+tango.setTarget(HEADTILT, stop)
 video.release()
 cv.destroyAllWindows()
