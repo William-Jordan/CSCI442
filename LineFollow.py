@@ -21,9 +21,11 @@ turn = 6000
 
 forward = 5400
 backward = 6800
-left = 5500
-right = 6500
+left = 5200
+right = 6800
 stop = 6000
+
+stopThresh = 7000
 
 def onMouse(event, x, y, flags, param):
     if event == cv.EVENT_LBUTTONDBLCLK:
@@ -80,7 +82,7 @@ while True:
         print('turn right')
         tango.setTarget(MOTORS, stop)
         tango.setTarget(TURN, right)
-    elif len(massX) < 9000 and len(massY) < 9000:
+    elif len(massX) < stopThresh and len(massY) < stopThresh:
         print('stop')
         tango.setTarget(TURN, stop)
         tango.setTarget(MOTORS, stop)
