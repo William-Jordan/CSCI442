@@ -31,11 +31,14 @@ rotate = True
 if rotate:
     tango.setTarget(MOTORS, stop)
     tango.setTarget(TURN, left)
-    time.sleep(90t)
+    time.sleep(t90)
     tango.setTarget(TURN, stop)
-    tango.setTarget(TURN, right)
-    time.sleep(tick)
-    tango.setTarget(TURN, stop)
+    time.sleep(.5)
+    for i in range(10):
+        tango.setTarget(TURN, right)
+        tango.sleep(tick)
+        tango.setTarget(TURN, stop)
+        time.sleep(1)
 
 tango.setTarget(TURN, stop)
 tango.setTarget(MOTORS, stop)
