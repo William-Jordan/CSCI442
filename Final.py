@@ -88,7 +88,7 @@ stage = 0
 blueMin = np.array([230,200,0])
 blueMax = np.array([255,255,255])
 
-orangeMin = np.array([65, 190, 230])
+orangeMin = np.array([35, 115, 230])
 orangeMax = np.array([210, 255, 255])
 
 whiteMin = np.array([120, 120, 120])
@@ -152,6 +152,7 @@ try:
         elif stage == 1:
             maskOrange = cv2.inRange(blur, orangeMin, orangeMax)
             cv2.imshow('orange', maskOrange)
+            
             #edges = cv2.Canny(blur, t1, t2)
             #avoid white notebooks
             #travel to orange line
