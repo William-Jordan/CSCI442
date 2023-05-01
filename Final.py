@@ -2,6 +2,7 @@ import pyrealsense2 as rs
 import numpy as np
 import cv2
 import time
+from maestro import Controller
 
 MOTORS = 1
 TURN = 0
@@ -19,7 +20,7 @@ turn = 6000
 forward = 5300
 backward = 6800
 left = 7000
-right = 5100
+right = 5000
 stop = 6000
 
 
@@ -83,7 +84,7 @@ depth_scale = depth_sensor.get_depth_scale()
 align_to = rs.stream.color
 align = rs.align(align_to)
 
-stage = 2
+stage = 0
 blueMin = np.array([230,200,0])
 blueMax = np.array([255,255,255])
 
@@ -105,6 +106,10 @@ greenMax = np.array([120, 220, 145])
 thresholdCounts = 100000
 IceColor = 'None'
 
+t90 = 1.5
+tick = 0.3
+
+whiteROIThresh = 3825000
 try:
     while True:
             
@@ -126,8 +131,20 @@ try:
         blur = cv2.blur(color_image, (5,5))
         blurHSV = cv2.blur(hsv_image, (5,5))
         if stage == 0:
-            maskBlue = cv2.inRange(blur, blueMin, blueMax)
-            cv2.imshow('blue', maskBlue)
+            maskOrange = cv2.inRange(blur, orangeMin, orangeMax)
+            maskOrange = cv2.resize(maskOrange, (400,400))
+            orangeROI = maskOrange[150:250, 100:300]
+            orangeCount = np.sum(orangeROI)
+            if orangeCount > whiteROIThresh:
+                stage += 1
+                print('Faceing Correct')
+            else:
+                tango.setTarget(MOTORS, stop)
+                tango.setTarget(TURN, left)
+                time.sleep(tick)
+                tango.setTarget(TURN, stop)
+            cv2.imshow('Orange', orangeROI)
+            
             #rotate until we see a blue line
             #Cross line straight
             #Counting Pixels in center screen only to align
