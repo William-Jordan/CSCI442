@@ -88,8 +88,8 @@ stage = 1
 blueMin = np.array([230,200,0])
 blueMax = np.array([255,255,255])
 
-orangeMin = np.array([25, 175, 170])
-orangeMax = np.array([70, 115, 255])
+orangeMin = np.array([25, 70, 160])
+orangeMax = np.array([100, 160, 255])
 
 whiteMin = np.array([120, 120, 120])
 whiteMax = np.array([170, 170, 170])
