@@ -167,8 +167,8 @@ try:
             #if facing direction stage +=1
         elif stage == 1:
             maskOrange = cv2.inRange(blur, orangeMin, orangeMax)
-            ret, thresh = cv2.threshold(maskOrange, 127,255,0)
-            im2,contours,hie = cv2.findContours(thresh, cv2.RETR_TREE, cv2. CHAIN_APPROX_SIMPLE)
+            #ret, thresh = cv2.threshold(maskOrange, 127,255,0)
+            #im2,contours,hie = cv2.findContours(thresh, cv2.RETR_TREE, cv2. CHAIN_APPROX_SIMPLE)
             cv2.imshow('Contours', im2)
             cv2.imshow('orange', maskOrange)
             
