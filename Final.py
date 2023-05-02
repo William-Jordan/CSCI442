@@ -213,8 +213,10 @@ try:
                 (x,y,w,h) = faces[0]
                 cv2.rectangle(color_image,(x,y),(x+w,y+h),(255,0,0),2)
                 tango.setTarget(MOTORS, forward)
-                time.sleep(.7)
+                time.sleep(1)
                 tango.setTarget(MOTORS, stop)
+                time.sleep(2)
+                tango.setTarget(HEADTILT, 5000)
                 
                 maskYellow = cv2.inRange(blur, yellowMin, yellowMax)
                 maskPink = cv2.inRange(blur, pinkMin, pinkMax)
@@ -231,18 +233,25 @@ try:
                 if yellowCount > thresholdCounts:
                     IceColor = 'Yellow'
                     print(IceColor)
+                    tango.setTarget(MOTORS, backward)
+                    time.sleep(.5)
+                    tango.setTarget(MOTORS, stop)
                     stage +=1
                 elif pinkCount > thresholdCounts:
                     IceColor = 'Pink'
                     print(IceColor)
+                    tango.setTarget(MOTORS, backward)
+                    time.sleep(.5)
+                    tango.setTarget(MOTORS, stop)
                     stage +=1
                 elif greenCount > thresholdCounts:
                     IceColor = 'Green'
                     print(IceColor)
+                    tango.setTarget(MOTORS, backward)
+                    time.sleep(.5)
+                    tango.setTarget(MOTORS, stop)
                     stage +=1
-                tango.setTarget(MOTORS, backward)
-                time.sleep(.5)
-                tango.setTarget(MOTORS, stop)
+                
             else:
                 tango.setTarget(MOTORS, stop)
                 tango.setTarget(TURN, right)
