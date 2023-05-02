@@ -217,40 +217,7 @@ try:
                 tango.setTarget(MOTORS, stop)
                 time.sleep(2)
                 tango.setTarget(HEADTILT, 5000)
-                
-                maskYellow = cv2.inRange(blur, yellowMin, yellowMax)
-                maskPink = cv2.inRange(blur, pinkMin, pinkMax)
-                maskGreen = cv2.inRange(blur, greenMin, greenMax)
-
-                yellowCount = np.sum(maskYellow)
-                pinkCount = np.sum(maskPink)
-                greenCount = np.sum(maskGreen)
-
-                cv2.imshow('yellow', maskYellow)
-                cv2.imshow('pink', maskPink)
-                cv2.imshow('green', maskGreen)
-                
-                if yellowCount > thresholdCounts:
-                    IceColor = 'Yellow'
-                    print(IceColor)
-                    tango.setTarget(MOTORS, backward)
-                    time.sleep(.5)
-                    tango.setTarget(MOTORS, stop)
-                    stage +=1
-                elif pinkCount > thresholdCounts:
-                    IceColor = 'Pink'
-                    print(IceColor)
-                    tango.setTarget(MOTORS, backward)
-                    time.sleep(.5)
-                    tango.setTarget(MOTORS, stop)
-                    stage +=1
-                elif greenCount > thresholdCounts:
-                    IceColor = 'Green'
-                    print(IceColor)
-                    tango.setTarget(MOTORS, backward)
-                    time.sleep(.5)
-                    tango.setTarget(MOTORS, stop)
-                    stage +=1
+                stage += 1
                 
             else:
                 tango.setTarget(MOTORS, stop)
@@ -292,6 +259,40 @@ try:
                 tango.setTarget(TURN, stop)
             '''
         elif stage == 3:
+            maskYellow = cv2.inRange(blur, yellowMin, yellowMax)
+            maskPink = cv2.inRange(blur, pinkMin, pinkMax)
+            maskGreen = cv2.inRange(blur, greenMin, greenMax)
+
+            yellowCount = np.sum(maskYellow)
+            pinkCount = np.sum(maskPink)
+            greenCount = np.sum(maskGreen)
+
+            cv2.imshow('yellow', maskYellow)
+            cv2.imshow('pink', maskPink)
+            cv2.imshow('green', maskGreen)
+            
+            if yellowCount > thresholdCounts:
+                IceColor = 'Yellow'
+                print(IceColor)
+                tango.setTarget(MOTORS, backward)
+                time.sleep(.5)
+                tango.setTarget(MOTORS, stop)
+                stage +=1
+            elif pinkCount > thresholdCounts:
+                IceColor = 'Pink'
+                print(IceColor)
+                tango.setTarget(MOTORS, backward)
+                time.sleep(.5)
+                tango.setTarget(MOTORS, stop)
+                stage +=1
+            elif greenCount > thresholdCounts:
+                IceColor = 'Green'
+                print(IceColor)
+                tango.setTarget(MOTORS, backward)
+                time.sleep(.5)
+                tango.setTarget(MOTORS, stop)
+                stage +=1
+        elif stage == 4:
             #hprint(IceColor)
             maskBlue = cv2.inRange(blur, blueMin, blueMax)
             #maskOrange = cv2.resize(maskOrange, (400,400))
@@ -334,7 +335,7 @@ try:
             #aproach
             #if close stage += 1
             '''
-        elif stage ==4:
+        elif stage ==5:
             tango.setTarget(MOTORS, forward)
             maskOrange = cv2.inRange(blur, orangeMin, orangeMax)
             maskOrange = cv2.resize(maskOrange, (400,400))
@@ -355,7 +356,7 @@ try:
             #Drive Forward to find orange line
             #aproach line center on
             #if facing direction stage +=1
-        elif stage ==5:
+        elif stage ==6:
             cv2.destroyAllWindows()
             #time.sleep(2)
             
@@ -391,7 +392,7 @@ try:
             #if cross stage +=1
             
 
-        elif stage == 6:
+        elif stage == 7:
             #maskOrange = cv2.inRange(blur, orangeMin, orangeMax)
             #cv2.imshow('orange', maskOrange)
             img_gray = cv2.cvtColor(color_image, cv2.COLOR_BGR2GRAY)
