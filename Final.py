@@ -135,18 +135,24 @@ try:
             #maskOrange = cv2.resize(maskOrange, (400,400))
             ret, thresh = cv2.threshold(maskOrange, 127,255,0)
             contours = cv2.findContours(thresh,cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+            theo = 1
+            count = 0
             for con in contours[0]:
-                (x,y,w,h) = cv.boundingRect(con)
+                (x,y,w,h) = cv2.boundingRect(con)
                 if w > 50 and h > 50:
                     #cv2.rectangle(frame, (x,y), (x+w, y+h), (255,0,0), 2)
                     roi = thresh[y:y+h, x:x+w]
                     count = np.sum(roi)
                     theo = w*h*255*.7
-                    if count > theo:
-                        print('Flat')
-                        stage +=1
-                    else:
-                        print('angled')
+            if count > theo:
+                print('Flat')
+                stage +=1
+            else:
+                print('angled')
+                tango.setTarget(MOTORS, stop)
+                tango.setTarget(TURN, left)
+                time.sleep(tick)
+                tango.setTarget(TURN, stop)
             
             '''
             orangeROI = maskOrange[150:250, 100:300]
