@@ -146,7 +146,7 @@ try:
                     #cv2.rectangle(frame, (x,y), (x+w, y+h), (255,0,0), 2)
                     roi = thresh[y:y+h, x:x+w]
                     count = np.sum(roi)
-                    theo = w*h*255*.45
+                    theo = w*h*255*.40
             if count > theo:
                 #print('Flat')
                 stage +=1
@@ -157,6 +157,7 @@ try:
                 time.sleep(tick)
                 tango.setTarget(TURN, stop)
             cv2.imshow('orange', maskOrange)
+            
             
             '''
             orangeROI = maskOrange[150:250, 100:300]
@@ -205,9 +206,12 @@ try:
             #Sweep 180 looking for different ice colors
             img_gray = cv2.cvtColor(color_image, cv2.COLOR_BGR2GRAY)
             faces = face_cascade.detectMultiScale(img_gray, 1.3,5)
+            
             #for (x,y,w,h) in faces:
             #    cv2.rectangle(color_image,(x,y),(x+w,y+h),(255,0,0),2)
             if len(faces) > 0:
+                (x,y,w,h) = faces[0]
+                cv.rectangle(color_image,(x,y),(x+w,y+h),(255,0,0),2)
                 tango.setTarget(MOTORS, forward)
                 time.sleep(.7)
                 tango.setTarget(MOTORS, stop)
@@ -244,6 +248,7 @@ try:
                 tango.setTarget(TURN, right)
                 time.sleep(tick)
                 tango.setTarget(TURN, stop)
+            cv2.imshow('img', color_image)
                 
             '''
             maskYellow = cv2.inRange(blur, yellowMin, yellowMax)
