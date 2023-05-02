@@ -202,14 +202,6 @@ try:
             #if cross line stage +=1
         elif stage == 2:
             #Sweep 180 looking for different ice colors
-            img_gray = cv2.cvtColor(color_image, cv.COLOR_BGR2GRAY)
-            
-            faces = face_cascade.detectMultiScale(img_gray, 1.3,5)
-
-            if len(faces) == 1:
-                print('Face Found')
-            else:
-                print('no face')
             
             maskYellow = cv2.inRange(blur, yellowMin, yellowMax)
             maskPink = cv2.inRange(blur, pinkMin, pinkMax)
@@ -233,10 +225,13 @@ try:
                 IceColor = 'Green'
                 stage +=1
             else:
-                #rotate
-                pass
+                tango.setTarget(MOTORS, stop)
+                tango.setTarget(TURN, right)
+                time.sleep(tick)
+                tango.setTarget(TURN, stop)
 
         elif stage == 3:
+            print(IceColor)
             if IceColor == 'Yellow':
                 mask = cv2.inRange(blur, yellowMin, yellowMax)
             elif IceColor == 'Pink':
