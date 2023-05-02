@@ -84,7 +84,7 @@ depth_scale = depth_sensor.get_depth_scale()
 align_to = rs.stream.color
 align = rs.align(align_to)
 
-stage = 1
+stage = 0
 blueMin = np.array([230,200,0])
 blueMax = np.array([255,255,255])
 
@@ -110,6 +110,9 @@ t90 = 1.5
 tick = 0.3
 
 whiteROIThresh = 3825000
+
+face_cascade = cv.CascadeClassifier(r'C:\Users\RTBat\OneDrive\Desktop\Computer Vision\Cascades\haarcascades\haarcascade_frontalface_default.xml')
+
 try:
     while True:
             
@@ -172,7 +175,7 @@ try:
             #Counting Pixels in center screen only to align
             #if facing direction stage +=1
         elif stage == 1:
-            #tango.setTarget(MOTORS, forward)
+            tango.setTarget(MOTORS, forward)
             maskBlue = cv2.inRange(blur, blueMin, blueMax)
             maskBlue = cv2.resize(maskBlue, (400,400))
             blueROI = maskBlue[300:400, 0:400]
@@ -180,8 +183,8 @@ try:
             count = np.sum(blueROI)
             
             if count > theo:
-                #tango.setTarget(MOTORS, forward)
-                #time.sleep(.5)
+                tango.setTarget(MOTORS, forward)
+                time.sleep(.5)
                 tango.setTarget(MOTORS, stop)
                 print('Crossed Blue')
                 stage +=1
@@ -198,6 +201,15 @@ try:
             #if cross line stage +=1
         elif stage == 2:
             #Sweep 180 looking for different ice colors
+            img_gray = cv2.cvtColor(color_image, cv.COLOR_BGR2GRAY)
+            
+            faces = face_cascade.detectMultiScale(img_gray, 1.3,5)
+
+            if len(faces) == 1:
+                print('Face Found')
+            else:
+                print('no face')
+            
             maskYellow = cv2.inRange(blur, yellowMin, yellowMax)
             maskPink = cv2.inRange(blur, pinkMin, pinkMax)
             maskGreen = cv2.inRange(blur, greenMin, greenMax)
