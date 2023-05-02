@@ -84,7 +84,7 @@ depth_scale = depth_sensor.get_depth_scale()
 align_to = rs.stream.color
 align = rs.align(align_to)
 
-stage = 2
+stage = 0
 blueMin = np.array([230,200,0])
 blueMax = np.array([255,255,255])
 
@@ -185,7 +185,7 @@ try:
             
             if count > theo:
                 tango.setTarget(MOTORS, forward)
-                time.sleep(.2)
+                time.sleep(.6)
                 tango.setTarget(MOTORS, stop)
                 print('Crossed Blue')
                 stage +=1
@@ -203,7 +203,6 @@ try:
         elif stage == 2:
             time.sleep(2)
             #Sweep 180 looking for different ice colors
-            
             maskYellow = cv2.inRange(blur, yellowMin, yellowMax)
             maskPink = cv2.inRange(blur, pinkMin, pinkMax)
             maskGreen = cv2.inRange(blur, greenMin, greenMax)
@@ -234,6 +233,31 @@ try:
             
         elif stage == 3:
             print(IceColor)
+            maskBlue = cv2.inRange(blur, blueMin, blueMin)
+            #maskOrange = cv2.resize(maskOrange, (400,400))
+            ret, thresh = cv2.threshold(maskBlue, 127,255,0)
+            contours = cv2.findContours(thresh,cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+            theo = 1
+            count = 0
+            for con in contours[0]:
+                (x,y,w,h) = cv2.boundingRect(con)
+                if w > 50 and h > 50:
+                    #cv2.rectangle(frame, (x,y), (x+w, y+h), (255,0,0), 2)
+                    roi = thresh[y:y+h, x:x+w]
+                    count = np.sum(roi)
+                    theo = w*h*255*.5
+            if count > theo:
+                print('Flat')
+                stage +=1
+            else:
+                print('angled')
+                tango.setTarget(MOTORS, stop)
+                tango.setTarget(TURN, left)
+                time.sleep(tick)
+                tango.setTarget(TURN, stop)
+            cv2.imshow('blue', maskBlue)
+            '''
+            
             if IceColor == 'Yellow':
                 mask = cv2.inRange(blur, yellowMin, yellowMax)
             elif IceColor == 'Pink':
@@ -249,13 +273,58 @@ try:
             print(IceColor)
             #aproach
             #if close stage += 1
+            '''
         elif stage ==4:
+            tango.setTarget(MOTORS, forward)
+            maskOrange = cv2.inRange(blur, orangeMin, orangeMax)
+            maskOrange = cv2.resize(maskOrange, (400,400))
+            orangeROI = maskOrange[300:400, 0:400]
+            theo = 400*100*255*.2
+            count = np.sum(orangeROI)
+            
+            if count > theo:
+                tango.setTarget(MOTORS, forward)
+                time.sleep(.6)
+                tango.setTarget(MOTORS, stop)
+                print('Crossed Orange')
+                stage +=1
             #Turn 180
             #Drive Forward to find orange line
             #aproach line center on
             #if facing direction stage +=1
             pass
         elif stage ==5:
+            time.sleep(2)
+            tango.setTarget(TURN, left)
+            time.sleep(.8)
+            tango.setTarget(TURN, stop)
+            #Sweep 180 looking for different ice colors
+            if IceColor == 'Yellow':
+                mask = cv2.inRange(blur, yellowMin, yellowMax)
+            elif IceColor == 'Pink':
+                mask = cv2.inRange(blur, pinkMin, pinkMax)
+            else:
+                mask = cv2.inRange(blur, greenMin, greenMax)
+
+            mask= cv2.resize(mask, (400,400))
+
+
+            ROI = mask[0:400, 100:300]
+            
+            count = np.sum(ROI)
+
+            cv2.imshow('mask', mask)
+            
+            if count > 60000:
+                tango.setTarget(MOTORS, forward)
+                time.sleep(5)
+                tango.setTarget(MOTORS, stop)
+                stage += 1
+            else:
+                tango.setTarget(MOTORS, stop)
+                tango.setTarget(TURN, right)
+                time.sleep(tick)
+                tango.setTarget(TURN, stop)
             #avoid white notebooks
             #travel to blue line
             #if cross stage +=1
