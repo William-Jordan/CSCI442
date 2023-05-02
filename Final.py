@@ -84,7 +84,7 @@ depth_scale = depth_sensor.get_depth_scale()
 align_to = rs.stream.color
 align = rs.align(align_to)
 
-stage = 6
+stage = 0
 blueMin = np.array([230,200,0])
 blueMax = np.array([255,255,255])
 
@@ -211,7 +211,7 @@ try:
             #    cv2.rectangle(color_image,(x,y),(x+w,y+h),(255,0,0),2)
             if len(faces) > 0:
                 (x,y,w,h) = faces[0]
-                cv.rectangle(color_image,(x,y),(x+w,y+h),(255,0,0),2)
+                cv2.rectangle(color_image,(x,y),(x+w,y+h),(255,0,0),2)
                 tango.setTarget(MOTORS, forward)
                 time.sleep(.7)
                 tango.setTarget(MOTORS, stop)
