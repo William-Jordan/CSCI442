@@ -185,7 +185,7 @@ try:
             
             if count > theo:
                 tango.setTarget(MOTORS, forward)
-                time.sleep(.6)
+                time.sleep(1.5)
                 tango.setTarget(MOTORS, stop)
                 print('Crossed Blue')
                 stage +=1
@@ -233,7 +233,7 @@ try:
             
         elif stage == 3:
             print(IceColor)
-            maskBlue = cv2.inRange(blur, blueMin, blueMin)
+            maskBlue = cv2.inRange(blur, blueMin, blueMax)
             #maskOrange = cv2.resize(maskOrange, (400,400))
             ret, thresh = cv2.threshold(maskBlue, 127,255,0)
             contours = cv2.findContours(thresh,cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
