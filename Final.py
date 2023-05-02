@@ -2,7 +2,7 @@ import pyrealsense2 as rs
 import numpy as np
 import cv2
 import time
-from maestro import Controller
+#from maestro import Controller
 
 MOTORS = 1
 TURN = 0
@@ -10,7 +10,7 @@ BODY = 2
 HEADTILT = 4
 HEADTURN = 3
 
-tango = Controller()
+#tango = Controller()
 body = 6000
 headTurn = 6000
 headTilt = 6000
@@ -132,7 +132,23 @@ try:
         blurHSV = cv2.blur(hsv_image, (5,5))
         if stage == 0:
             maskOrange = cv2.inRange(blur, orangeMin, orangeMax)
-            maskOrange = cv2.resize(maskOrange, (400,400))
+            #maskOrange = cv2.resize(maskOrange, (400,400))
+            ret, thresh = cv2.threshold(maskOrange, 127,255,0)
+            contours = cv2.findContours(thresh,cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
+            for con in contours[0]:
+                (x,y,w,h) = cv.boundingRect(con)
+                if w > 50 and h > 50:
+                    #cv2.rectangle(frame, (x,y), (x+w, y+h), (255,0,0), 2)
+                    roi = thresh[y:y+h, x:x+w]
+                    count = np.sum(roi)
+                    theo = w*h*255*.7
+                    if count > theo:
+                        print('Flat')
+                        stage +=1
+                    else:
+                        print('angled')
+            
+            '''
             orangeROI = maskOrange[150:250, 100:300]
             orangeCount = np.sum(orangeROI)
             if orangeCount > whiteROIThresh:
@@ -144,13 +160,16 @@ try:
                 time.sleep(tick)
                 tango.setTarget(TURN, stop)
             cv2.imshow('Orange', orangeROI)
-            
+            '''
             #rotate until we see a blue line
             #Cross line straight
             #Counting Pixels in center screen only to align
             #if facing direction stage +=1
         elif stage == 1:
             maskOrange = cv2.inRange(blur, orangeMin, orangeMax)
+            ret, thresh = cv2.threshold(maskOrange, 127,255,0)
+            im2,contours,hie = cv2.findContours(thresh, cv2.RETR_TREE, cv2. CHAIN_APPROX_SIMPLE)
+            cv2.imshow('Contours', im2)
             cv2.imshow('orange', maskOrange)
             
             #edges = cv2.Canny(blur, t1, t2)
