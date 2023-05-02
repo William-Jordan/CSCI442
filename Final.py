@@ -395,6 +395,7 @@ try:
         elif stage == 7:
             maskOrange = cv2.inRange(blur, yellowMin, yellowMax)
             cv2.imshow('orange', maskOrange)
+            print(np.sum(maskOrange))
             #img_gray = cv2.cvtColor(color_image, cv2.COLOR_BGR2GRAY)
             #faces = face_cascade.detectMultiScale(img_gray, 1.3,5)
             #for (x,y,w,h) in faces:
