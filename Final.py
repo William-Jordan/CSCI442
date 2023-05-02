@@ -201,6 +201,7 @@ try:
             #Cross Line Straight
             #if cross line stage +=1
         elif stage == 2:
+            time.sleep(2)
             #Sweep 180 looking for different ice colors
             
             maskYellow = cv2.inRange(blur, yellowMin, yellowMax)
