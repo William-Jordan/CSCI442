@@ -146,7 +146,7 @@ try:
                     #cv2.rectangle(frame, (x,y), (x+w, y+h), (255,0,0), 2)
                     roi = thresh[y:y+h, x:x+w]
                     count = np.sum(roi)
-                    theo = w*h*255*.6
+                    theo = w*h*255*.5
             if count > theo:
                 print('Flat')
                 stage +=1
@@ -180,12 +180,12 @@ try:
             maskBlue = cv2.inRange(blur, blueMin, blueMax)
             maskBlue = cv2.resize(maskBlue, (400,400))
             blueROI = maskBlue[300:400, 0:400]
-            theo = 400*100*255*.3
+            theo = 400*100*255*.2
             count = np.sum(blueROI)
             
             if count > theo:
                 tango.setTarget(MOTORS, forward)
-                time.sleep(.5)
+                time.sleep(.2)
                 tango.setTarget(MOTORS, stop)
                 print('Crossed Blue')
                 stage +=1
