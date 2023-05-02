@@ -290,6 +290,9 @@ try:
                 time.sleep(1.5)
                 tango.setTarget(MOTORS, stop)
                 print('Crossed Orange')
+                tango.setTarget(TURN, left)
+                time.sleep(.8)
+                tango.setTarget(TURN, stop)
                 stage +=1
             #Turn 180
             #Drive Forward to find orange line
@@ -298,9 +301,7 @@ try:
         elif stage ==5:
             cv2.destroyAllWindows()
             #time.sleep(2)
-            tango.setTarget(TURN, left)
-            time.sleep(.8)
-            tango.setTarget(TURN, stop)
+            
             #Sweep 180 looking for different ice colors
             if IceColor == 'Yellow':
                 mask = cv2.inRange(blur, yellowMin, yellowMax)
