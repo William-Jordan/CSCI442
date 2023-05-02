@@ -84,7 +84,7 @@ depth_scale = depth_sensor.get_depth_scale()
 align_to = rs.stream.color
 align = rs.align(align_to)
 
-stage = 0
+stage = 2
 blueMin = np.array([230,200,0])
 blueMax = np.array([255,255,255])
 
@@ -207,6 +207,7 @@ try:
             maskPink = cv2.inRange(blur, pinkMin, pinkMax)
             maskGreen = cv2.inRange(blur, greenMin, greenMax)
 
+
             yellowCount = np.sum(maskYellow)
             pinkCount = np.sum(maskPink)
             greenCount = np.sum(maskGreen)
@@ -214,7 +215,7 @@ try:
             cv2.imshow('yellow', maskYellow)
             cv2.imshow('pink', maskPink)
             cv2.imshow('green', maskGreen)
-
+            '''
             if yellowCount > thresholdCounts:
                 IceColor = 'Yellow'
                 stage +=1
@@ -229,7 +230,7 @@ try:
                 tango.setTarget(TURN, right)
                 time.sleep(tick)
                 tango.setTarget(TURN, stop)
-
+            '''
         elif stage == 3:
             print(IceColor)
             if IceColor == 'Yellow':
