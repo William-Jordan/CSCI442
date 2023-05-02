@@ -2,7 +2,7 @@ import pyrealsense2 as rs
 import numpy as np
 import cv2
 import time
-#from maestro import Controller
+from maestro import Controller
 
 MOTORS = 1
 TURN = 0
@@ -10,7 +10,7 @@ BODY = 2
 HEADTILT = 4
 HEADTURN = 3
 
-#tango = Controller()
+tango = Controller()
 body = 6000
 headTurn = 6000
 headTilt = 6000
@@ -134,7 +134,7 @@ try:
             maskOrange = cv2.inRange(blur, orangeMin, orangeMax)
             #maskOrange = cv2.resize(maskOrange, (400,400))
             ret, thresh = cv2.threshold(maskOrange, 127,255,0)
-            contours = cv2.findContours(thresh,cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
+            contours = cv2.findContours(thresh,cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
             for con in contours[0]:
                 (x,y,w,h) = cv.boundingRect(con)
                 if w > 50 and h > 50:
