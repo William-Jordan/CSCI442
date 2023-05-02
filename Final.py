@@ -103,7 +103,7 @@ pinkMax = np.array([150, 90, 255])
 greenMin = np.array([40, 180, 85])
 greenMax = np.array([120, 250, 145])
 
-thresholdCounts = 700000
+thresholdCounts = 200000000
 IceColor = 'None'
 
 t90 = 1.5
