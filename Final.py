@@ -84,12 +84,12 @@ depth_scale = depth_sensor.get_depth_scale()
 align_to = rs.stream.color
 align = rs.align(align_to)
 
-stage = 6
+stage = 0
 blueMin = np.array([230,200,0])
 blueMax = np.array([255,255,255])
 
-orangeMin = np.array([100, 180, 220])
-orangeMax = np.array([200, 255, 255])
+orangeMin = np.array([90, 160, 220])
+orangeMax = np.array([160, 210, 255])
 
 whiteMin = np.array([120, 120, 120])
 whiteMax = np.array([170, 170, 170])
