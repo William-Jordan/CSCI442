@@ -84,7 +84,7 @@ depth_scale = depth_sensor.get_depth_scale()
 align_to = rs.stream.color
 align = rs.align(align_to)
 
-stage = 0
+stage = 7
 blueMin = np.array([230,200,0])
 blueMax = np.array([255,255,255])
 
@@ -213,7 +213,7 @@ try:
                 (x,y,w,h) = faces[0]
                 cv2.rectangle(color_image,(x,y),(x+w,y+h),(255,0,0),2)
                 tango.setTarget(MOTORS, forward)
-                time.sleep(1)
+                time.sleep(3)
                 tango.setTarget(MOTORS, stop)
                 time.sleep(2)
                 tango.setTarget(HEADTILT, 5000)
@@ -393,12 +393,12 @@ try:
             
 
         elif stage == 7:
-            #maskOrange = cv2.inRange(blur, orangeMin, orangeMax)
-            #cv2.imshow('orange', maskOrange)
-            img_gray = cv2.cvtColor(color_image, cv2.COLOR_BGR2GRAY)
-            faces = face_cascade.detectMultiScale(img_gray, 1.3,5)
-            for (x,y,w,h) in faces:
-                cv2.rectangle(color_image,(x,y),(x+w,y+h),(255,0,0),2)
+            maskOrange = cv2.inRange(blur, yellowMin, yellowMax)
+            cv2.imshow('orange', maskOrange)
+            #img_gray = cv2.cvtColor(color_image, cv2.COLOR_BGR2GRAY)
+            #faces = face_cascade.detectMultiScale(img_gray, 1.3,5)
+            #for (x,y,w,h) in faces:
+            #    cv2.rectangle(color_image,(x,y),(x+w,y+h),(255,0,0),2)
             
             # Show images
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
