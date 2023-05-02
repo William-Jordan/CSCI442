@@ -295,8 +295,8 @@ try:
             #Drive Forward to find orange line
             #aproach line center on
             #if facing direction stage +=1
-            pass
         elif stage ==5:
+            cv2.destroyAllWindows()
             #time.sleep(2)
             tango.setTarget(TURN, left)
             time.sleep(.8)
@@ -318,7 +318,7 @@ try:
 
             cv2.imshow('mask', mask)
             
-            if count > 300000:
+            if count > 500000:
                 tango.setTarget(MOTORS, forward)
                 time.sleep(5)
                 tango.setTarget(MOTORS, stop)
@@ -331,7 +331,7 @@ try:
             #avoid white notebooks
             #travel to blue line
             #if cross stage +=1
-            pass
+            
 
         elif stage == 6:
             maskOrange = cv2.inRange(blur, orangeMin, orangeMax)
