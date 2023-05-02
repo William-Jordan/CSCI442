@@ -146,12 +146,12 @@ try:
                     #cv2.rectangle(frame, (x,y), (x+w, y+h), (255,0,0), 2)
                     roi = thresh[y:y+h, x:x+w]
                     count = np.sum(roi)
-                    theo = w*h*255*.5
+                    theo = w*h*255*.45
             if count > theo:
-                print('Flat')
+                #print('Flat')
                 stage +=1
             else:
-                print('angled')
+                #print('angled')
                 tango.setTarget(MOTORS, stop)
                 tango.setTarget(TURN, left)
                 time.sleep(tick)
@@ -185,7 +185,7 @@ try:
             
             if count > theo:
                 tango.setTarget(MOTORS, forward)
-                time.sleep(1.5)
+                time.sleep(2.5)
                 tango.setTarget(MOTORS, stop)
                 print('Crossed Blue')
                 stage +=1
@@ -201,7 +201,7 @@ try:
             #Cross Line Straight
             #if cross line stage +=1
         elif stage == 2:
-            time.sleep(2)
+            #time.sleep(2)
             #Sweep 180 looking for different ice colors
             maskYellow = cv2.inRange(blur, yellowMin, yellowMax)
             maskPink = cv2.inRange(blur, pinkMin, pinkMax)
@@ -245,12 +245,12 @@ try:
                     #cv2.rectangle(frame, (x,y), (x+w, y+h), (255,0,0), 2)
                     roi = thresh[y:y+h, x:x+w]
                     count = np.sum(roi)
-                    theo = w*h*255*.5
+                    theo = w*h*255*.45
             if count > theo:
-                print('Flat')
+                #print('Flat')
                 stage +=1
             else:
-                print('angled')
+                #print('angled')
                 tango.setTarget(MOTORS, stop)
                 tango.setTarget(TURN, left)
                 time.sleep(tick)
@@ -284,7 +284,7 @@ try:
             
             if count > theo:
                 tango.setTarget(MOTORS, forward)
-                time.sleep(.6)
+                time.sleep(1.5)
                 tango.setTarget(MOTORS, stop)
                 print('Crossed Orange')
                 stage +=1
@@ -294,7 +294,7 @@ try:
             #if facing direction stage +=1
             pass
         elif stage ==5:
-            time.sleep(2)
+            #time.sleep(2)
             tango.setTarget(TURN, left)
             time.sleep(.8)
             tango.setTarget(TURN, stop)
