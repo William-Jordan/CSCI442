@@ -84,24 +84,24 @@ depth_scale = depth_sensor.get_depth_scale()
 align_to = rs.stream.color
 align = rs.align(align_to)
 
-stage = 0
+stage = 6
 blueMin = np.array([230,200,0])
 blueMax = np.array([255,255,255])
 
 orangeMin = np.array([90, 160, 220])
-orangeMax = np.array([160, 210, 255])
+orangeMax = np.array([175, 255, 255])
 
 whiteMin = np.array([120, 120, 120])
 whiteMax = np.array([170, 170, 170])
 
-yellowMin = np.array([15, 120, 120])
-yellowMax = np.array([75, 180, 180])
+yellowMin = np.array([15, 15, 150])
+yellowMax = np.array([90, 255, 255])
 
-pinkMin = np.array([150, 70, 220])
-pinkMax = np.array([180, 110, 255])
+pinkMin = np.array([90, 20, 210])
+pinkMax = np.array([150, 90, 255])
 
 greenMin = np.array([40, 180, 85])
-greenMax = np.array([120, 220, 145])
+greenMax = np.array([120, 250, 145])
 
 thresholdCounts = 300000
 IceColor = 'None'
@@ -335,8 +335,12 @@ try:
             
 
         elif stage == 6:
-            maskOrange = cv2.inRange(blur, orangeMin, orangeMax)
-            cv2.imshow('orange', maskOrange)
+            #maskOrange = cv2.inRange(blur, orangeMin, orangeMax)
+            #cv2.imshow('orange', maskOrange)
+            img_gray = cv2.cvtColor(color_image, cv2.COLOR_BGR2GRAY)
+            faces = face_cascade.detectMultiScale(img_gray, 1.3,5)
+            for (x,y,w,h) in faces:
+                cv2.rectangle(color_image,(x,y),(x+w,y+h),(255,0,0),2)
             
             # Show images
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
