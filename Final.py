@@ -111,7 +111,7 @@ tick = 0.3
 
 whiteROIThresh = 3825000
 
-face_cascade = cv2.CascadeClassifier(r'C:\Users\RTBat\OneDrive\Desktop\Computer Vision\Cascades\haarcascades\haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
 try:
     while True:
