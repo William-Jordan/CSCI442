@@ -84,7 +84,7 @@ depth_scale = depth_sensor.get_depth_scale()
 align_to = rs.stream.color
 align = rs.align(align_to)
 
-stage = 0
+stage = 6
 blueMin = np.array([230,200,0])
 blueMax = np.array([255,255,255])
 
@@ -218,12 +218,15 @@ try:
             
             if yellowCount > thresholdCounts:
                 IceColor = 'Yellow'
+                print(IceColor)
                 stage +=1
             elif pinkCount > thresholdCounts:
                 IceColor = 'Pink'
+                print(IceColor)
                 stage +=1
             elif greenCount > thresholdCounts:
                 IceColor = 'Green'
+                print(IceColor)
                 stage +=1
             else:
                 tango.setTarget(MOTORS, stop)
@@ -232,7 +235,7 @@ try:
                 tango.setTarget(TURN, stop)
             
         elif stage == 3:
-            print(IceColor)
+            #hprint(IceColor)
             maskBlue = cv2.inRange(blur, blueMin, blueMax)
             #maskOrange = cv2.resize(maskOrange, (400,400))
             ret, thresh = cv2.threshold(maskBlue, 127,255,0)
@@ -331,10 +334,8 @@ try:
             pass
 
         elif stage == 6:
-            #Sweep 180 with ice color map
-            #aproach
-            #bump into box
-            pass
+            maskOrange = cv2.inRange(blur, orangeMin, orangeMax)
+            cv2.imshow('orange', maskOrange)
             
             # Show images
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
