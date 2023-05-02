@@ -103,7 +103,7 @@ pinkMax = np.array([180, 110, 255])
 greenMin = np.array([40, 180, 85])
 greenMax = np.array([120, 220, 145])
 
-thresholdCounts = 100000
+thresholdCounts = 300000
 IceColor = 'None'
 
 t90 = 1.5
@@ -215,7 +215,7 @@ try:
             cv2.imshow('yellow', maskYellow)
             cv2.imshow('pink', maskPink)
             cv2.imshow('green', maskGreen)
-            '''
+            
             if yellowCount > thresholdCounts:
                 IceColor = 'Yellow'
                 stage +=1
@@ -230,7 +230,7 @@ try:
                 tango.setTarget(TURN, right)
                 time.sleep(tick)
                 tango.setTarget(TURN, stop)
-            '''
+            
         elif stage == 3:
             print(IceColor)
             if IceColor == 'Yellow':
