@@ -172,11 +172,24 @@ try:
             #Counting Pixels in center screen only to align
             #if facing direction stage +=1
         elif stage == 1:
-            maskOrange = cv2.inRange(blur, orangeMin, orangeMax)
+            #tango.setTarget(MOTORS, forward)
+            maskBlue = cv2.inRange(blur, blueMin, blueMax)
+            maskBlue = cv2.resize(maskBlue, (400,400))
+            blueROI = maskBlue[300:400, 0:400]
+            theo = 400*100*255*.6
+            count = np.sum(blueROI)
+            
+            if count > theo:
+                #tango.setTarget(MOTORS, forward)
+                #time.sleep(.5)
+                tango.setTarget(MOTORS, stop)
+                print('Crossed Blue')
+                stage +=1
+
             #ret, thresh = cv2.threshold(maskOrange, 127,255,0)
             #im2,contours,hie = cv2.findContours(thresh, cv2.RETR_TREE, cv2. CHAIN_APPROX_SIMPLE)
             #cv2.imshow('Contours', im2)
-            cv2.imshow('orange', maskOrange)
+            cv2.imshow('blue', maskBlue)
             
             #edges = cv2.Canny(blur, t1, t2)
             #avoid white notebooks
