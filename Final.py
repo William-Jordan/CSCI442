@@ -97,8 +97,8 @@ whiteMax = np.array([170, 170, 170])
 yellowMin = np.array([15, 120, 120])
 yellowMax = np.array([75, 180, 180])
 
-pinkMin = np.array([55, 10, 175])
-pinkMax = np.array([190, 95, 255])
+pinkMin = np.array([150, 150, 175])
+pinkMax = np.array([230, 180, 255])
 
 greenMin = np.array([40, 180, 85])
 greenMax = np.array([120, 220, 145])
