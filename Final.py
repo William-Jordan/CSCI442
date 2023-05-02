@@ -252,7 +252,7 @@ try:
             else:
                 #print('angled')
                 tango.setTarget(MOTORS, stop)
-                tango.setTarget(TURN, left)
+                tango.setTarget(TURN, right)
                 time.sleep(tick)
                 tango.setTarget(TURN, stop)
             cv2.imshow('blue', maskBlue)
@@ -315,7 +315,7 @@ try:
 
             cv2.imshow('mask', mask)
             
-            if count > 60000:
+            if count > 300000:
                 tango.setTarget(MOTORS, forward)
                 time.sleep(5)
                 tango.setTarget(MOTORS, stop)
