@@ -18,7 +18,7 @@ motors = 6000
 turn = 6000
 
 forward = 5300
-backward = 6800
+backward = 6700
 left = 7000
 right = 5000
 stop = 6000
@@ -203,6 +203,49 @@ try:
         elif stage == 2:
             #time.sleep(2)
             #Sweep 180 looking for different ice colors
+            img_gray = cv2.cvtColor(color_image, cv2.COLOR_BGR2GRAY)
+            faces = face_cascade.detectMultiScale(img_gray, 1.3,5)
+            #for (x,y,w,h) in faces:
+            #    cv2.rectangle(color_image,(x,y),(x+w,y+h),(255,0,0),2)
+            if len(faces) > 0:
+                tango.setTarget(MOTORS, forward)
+                time.sleep(.7)
+                tango.setTarget(MOTORS, stop)
+                
+                maskYellow = cv2.inRange(blur, yellowMin, yellowMax)
+                maskPink = cv2.inRange(blur, pinkMin, pinkMax)
+                maskGreen = cv2.inRange(blur, greenMin, greenMax)
+
+                yellowCount = np.sum(maskYellow)
+                pinkCount = np.sum(maskPink)
+                greenCount = np.sum(maskGreen)
+
+                cv2.imshow('yellow', maskYellow)
+                cv2.imshow('pink', maskPink)
+                cv2.imshow('green', maskGreen)
+                
+                if yellowCount > thresholdCounts:
+                    IceColor = 'Yellow'
+                    print(IceColor)
+                    stage +=1
+                elif pinkCount > thresholdCounts:
+                    IceColor = 'Pink'
+                    print(IceColor)
+                    stage +=1
+                elif greenCount > thresholdCounts:
+                    IceColor = 'Green'
+                    print(IceColor)
+                    stage +=1
+                tango.setTarget(MOTORS, backward)
+                time.sleep(.5)
+                tango.setTarget(MOTORS, stop)
+            else:
+                tango.setTarget(MOTORS, stop)
+                tango.setTarget(TURN, right)
+                time.sleep(tick)
+                tango.setTarget(TURN, stop)
+                
+            '''
             maskYellow = cv2.inRange(blur, yellowMin, yellowMax)
             maskPink = cv2.inRange(blur, pinkMin, pinkMax)
             maskGreen = cv2.inRange(blur, greenMin, greenMax)
@@ -233,7 +276,7 @@ try:
                 tango.setTarget(TURN, right)
                 time.sleep(tick)
                 tango.setTarget(TURN, stop)
-            
+            '''
         elif stage == 3:
             #hprint(IceColor)
             maskBlue = cv2.inRange(blur, blueMin, blueMax)
