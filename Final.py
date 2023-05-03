@@ -275,7 +275,7 @@ try:
                 IceColor = 'Yellow'
                 print(IceColor)
                 tango.setTarget(MOTORS, backward)
-                time.sleep(1)
+                time.sleep(1.5)
                 tango.setTarget(MOTORS, stop)
                 stage +=1
                 cv2.destroyAllWindows()
@@ -283,7 +283,7 @@ try:
                 IceColor = 'Pink'
                 print(IceColor)
                 tango.setTarget(MOTORS, backward)
-                time.sleep(1)
+                time.sleep(1.5)
                 tango.setTarget(MOTORS, stop)
                 stage +=1
                 cv2.destroyAllWindows()
@@ -291,7 +291,7 @@ try:
                 IceColor = 'Green'
                 print(IceColor)
                 tango.setTarget(MOTORS, backward)
-                time.sleep(1)
+                time.sleep(1.5)
                 tango.setTarget(MOTORS, stop)
                 stage +=1
                 cv2.destroyAllWindows()
