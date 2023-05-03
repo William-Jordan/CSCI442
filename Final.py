@@ -294,6 +294,7 @@ try:
                 stage +=1
         elif stage == 4:
             #hprint(IceColor)
+            cv2.destroyAllWindows()
             maskBlue = cv2.inRange(blur, blueMin, blueMax)
             #maskBlue = cv2.resize(maskBlue,(400,400))
             #maskBlue = maskBlue[200:400, 0:400]
@@ -351,7 +352,7 @@ try:
                 tango.setTarget(MOTORS, stop)
                 print('Crossed Orange')
                 tango.setTarget(TURN, left)
-                time.sleep(.8)
+                time.sleep(1.4)
                 tango.setTarget(TURN, stop)
                 stage +=1
             #Turn 180
