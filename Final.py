@@ -186,7 +186,7 @@ try:
             
             if count > theo:
                 tango.setTarget(MOTORS, forward)
-                time.sleep(2)
+                time.sleep(2.8)
                 tango.setTarget(MOTORS, stop)
                 print('Crossed Blue')
                 stage +=1
