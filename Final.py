@@ -85,8 +85,8 @@ align_to = rs.stream.color
 align = rs.align(align_to)
 
 stage = 7
-blueMin = np.array([230,200,0])
-blueMax = np.array([255,255,255])
+blueMin = np.array([230,200,50])
+blueMax = np.array([255,255,150])
 
 orangeMin = np.array([90, 160, 220])
 orangeMax = np.array([175, 255, 255])
@@ -395,9 +395,9 @@ try:
             
 
         elif stage == 7:
-            maskOrange = cv2.inRange(blur, yellowMin, yellowMax)
+            maskOrange = cv2.inRange(blur, blueMin, blueMax)
             cv2.imshow('orange', maskOrange)
-            print(np.sum(maskOrange))
+            #print(np.sum(maskOrange))
             #img_gray = cv2.cvtColor(color_image, cv2.COLOR_BGR2GRAY)
             #faces = face_cascade.detectMultiScale(img_gray, 1.3,5)
             #for (x,y,w,h) in faces:
