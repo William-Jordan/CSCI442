@@ -295,6 +295,8 @@ try:
         elif stage == 4:
             #hprint(IceColor)
             maskBlue = cv2.inRange(blur, blueMin, blueMax)
+            maskBlue = cv2.resize(maskBlue,(400,400))
+            maskBlue = maskBlue[200:400, 0:400]
             #maskOrange = cv2.resize(maskOrange, (400,400))
             ret, thresh = cv2.threshold(maskBlue, 127,255,0)
             contours = cv2.findContours(thresh,cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -379,7 +381,7 @@ try:
             
             if count > 500000:
                 tango.setTarget(MOTORS, forward)
-                time.sleep(5)
+                time.sleep(10)
                 tango.setTarget(MOTORS, stop)
                 stage += 1
             else:
