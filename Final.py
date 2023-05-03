@@ -309,7 +309,7 @@ try:
                     #cv2.rectangle(frame, (x,y), (x+w, y+h), (255,0,0), 2)
                     roi = thresh[y:y+h, x:x+w]
                     count = np.sum(roi)
-                    theo = w*h*255*.45
+                    theo = w*h*255*.40
             if count > theo:
                 #print('Flat')
                 stage +=1
@@ -352,7 +352,7 @@ try:
                 tango.setTarget(MOTORS, stop)
                 print('Crossed Orange')
                 tango.setTarget(TURN, left)
-                time.sleep(1.4)
+                time.sleep(1.2)
                 tango.setTarget(TURN, stop)
                 stage +=1
             #Turn 180
