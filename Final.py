@@ -98,12 +98,12 @@ yellowMin = np.array([15, 15, 150])
 yellowMax = np.array([90, 255, 255])
 
 pinkMin = np.array([90, 20, 210])
-pinkMax = np.array([150, 90, 255])
+pinkMax = np.array([190, 110, 255])
 
-greenMin = np.array([40, 180, 85])
-greenMax = np.array([120, 250, 145])
+greenMin = np.array([40, 160, 85])
+greenMax = np.array([140, 250, 145])
 
-thresholdCounts = 20000000
+thresholdCounts = 16000000
 IceColor = 'None'
 
 t90 = 1.5
@@ -186,7 +186,7 @@ try:
             
             if count > theo:
                 tango.setTarget(MOTORS, forward)
-                time.sleep(2.5)
+                time.sleep(2)
                 tango.setTarget(MOTORS, stop)
                 print('Crossed Blue')
                 stage +=1
