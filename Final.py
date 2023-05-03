@@ -278,6 +278,7 @@ try:
                 time.sleep(.5)
                 tango.setTarget(MOTORS, stop)
                 stage +=1
+                cv2.destroyAllWindows()
             elif pinkCount > thresholdCounts:
                 IceColor = 'Pink'
                 print(IceColor)
@@ -285,6 +286,7 @@ try:
                 time.sleep(.5)
                 tango.setTarget(MOTORS, stop)
                 stage +=1
+                cv2.destroyAllWindows()
             elif greenCount > thresholdCounts:
                 IceColor = 'Green'
                 print(IceColor)
@@ -292,9 +294,9 @@ try:
                 time.sleep(.5)
                 tango.setTarget(MOTORS, stop)
                 stage +=1
+                cv2.destroyAllWindows()
         elif stage == 4:
             #hprint(IceColor)
-            cv2.destroyAllWindows()
             maskBlue = cv2.inRange(blur, blueMin, blueMax)
             #maskBlue = cv2.resize(maskBlue,(400,400))
             #maskBlue = maskBlue[200:400, 0:400]
@@ -305,7 +307,7 @@ try:
             count = 0
             for con in contours[0]:
                 (x,y,w,h) = cv2.boundingRect(con)
-                if w > 50 and h > 50:
+                if w > 30 and h > 30:
                     #cv2.rectangle(frame, (x,y), (x+w, y+h), (255,0,0), 2)
                     roi = thresh[y:y+h, x:x+w]
                     count = np.sum(roi)
